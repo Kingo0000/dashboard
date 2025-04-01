@@ -130,9 +130,6 @@ The application can be configured by modifying:
 - More environmental impact metrics
 - Enhanced visualization options
 
-## 📜 License
-
-MIT License
 
 ## 🤝 Contributing
 
