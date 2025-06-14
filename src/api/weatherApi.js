@@ -1,4 +1,4 @@
-const API_KEY = "bca529b101b0eb944476804354b6e094"; 
+const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 const GEO_URL = "https://api.openweathermap.org/geo/1.0";
 
@@ -244,14 +244,12 @@ export const fetchWeatherData = async (
       period: dateRange === "24h" ? "Next 24 Hours" : "Next 5 Days",
       labels:
         dateRange === "24h"
-          ? forecastData.list
-              .slice(0, 8)
-              .map((item) =>
-                new Date(item.dt * 1000).toLocaleTimeString("en-US", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })
-              )
+          ? forecastData.list.slice(0, 8).map((item) =>
+              new Date(item.dt * 1000).toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            )
           : forecastData.list
               .filter((_, index) => index % 8 === 0)
               .slice(0, 5)
