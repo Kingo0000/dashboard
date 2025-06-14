@@ -14,7 +14,7 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
+} from "chart.js/auto";
 import { ClockCounterClockwise } from "@phosphor-icons/react";
 
 // Register ChartJS components

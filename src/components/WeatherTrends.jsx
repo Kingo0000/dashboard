@@ -18,7 +18,7 @@ import {
   Tooltip,
   Legend,
   Filler,
-} from "chart.js";
+} from "chart.js/auto";
 import { Thermometer, Drop, Wind, Pulse } from "@phosphor-icons/react";
 
 // Register ChartJS components

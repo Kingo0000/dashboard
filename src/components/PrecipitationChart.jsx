@@ -13,7 +13,7 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
+} from "chart.js/auto";
 import { CloudRain } from "@phosphor-icons/react";
 
 // Register ChartJS components
