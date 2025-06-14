@@ -22,7 +22,7 @@ import {
   Legend,
   Filler,
 } from "chart.js";
-import { Thermometer, Drop, Wind } from "@phosphor-icons/react";
+import { Thermometer, Drop, Wind, Activity } from "@phosphor-icons/react";
 
 // Register ChartJS components
 ChartJS.register(
@@ -48,40 +48,62 @@ const WeatherTrends = ({ data }) => {
       legend: {
         position: "top",
         labels: {
-          color: document.documentElement.classList.contains("dark")
-            ? "#fff"
-            : "#333",
+          color: "#1a202c",
+          usePointStyle: true,
+          padding: 20,
+          font: {
+            size: 12,
+            weight: "600",
+            family: "Inter",
+          },
         },
       },
       tooltip: {
         mode: "index",
         intersect: false,
+        backgroundColor: "rgba(255, 255, 255, 0.95)",
+        titleColor: "#1a202c",
+        bodyColor: "#4a5568",
+        borderColor: "rgba(71, 85, 105, 0.3)",
+        borderWidth: 1,
+        cornerRadius: 8,
+        padding: 12,
+        titleFont: {
+          size: 13,
+          weight: "600",
+        },
+        bodyFont: {
+          size: 12,
+          weight: "500",
+        },
       },
     },
     scales: {
       x: {
         grid: {
           display: false,
-          color: document.documentElement.classList.contains("dark")
-            ? "rgba(255, 255, 255, 0.1)"
-            : "rgba(0, 0, 0, 0.1)",
         },
         ticks: {
-          color: document.documentElement.classList.contains("dark")
-            ? "#fff"
-            : "#333",
+          color: "#64748b",
+          font: {
+            size: 11,
+            weight: "500",
+            family: "Inter",
+          },
         },
       },
       y: {
         grid: {
-          color: document.documentElement.classList.contains("dark")
-            ? "rgba(255, 255, 255, 0.1)"
-            : "rgba(0, 0, 0, 0.1)",
+          color: "rgba(71, 85, 105, 0.1)",
+          drawBorder: false,
         },
         ticks: {
-          color: document.documentElement.classList.contains("dark")
-            ? "#fff"
-            : "#333",
+          color: "#64748b",
+          font: {
+            size: 11,
+            weight: "500",
+            family: "Inter",
+          },
         },
       },
     },
@@ -89,6 +111,18 @@ const WeatherTrends = ({ data }) => {
       mode: "nearest",
       axis: "x",
       intersect: false,
+    },
+    elements: {
+      point: {
+        radius: 4,
+        hoverRadius: 6,
+        borderWidth: 2,
+        hoverBorderWidth: 3,
+      },
+      line: {
+        tension: 0.4,
+        borderWidth: 3,
+      },
     },
   };
 
@@ -98,16 +132,22 @@ const WeatherTrends = ({ data }) => {
       {
         label: "Temperature (°C)",
         data: data.temperature,
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "rgb(249, 115, 22)",
+        backgroundColor: "rgba(249, 115, 22, 0.1)",
+        fill: true,
         tension: 0.4,
+        pointBackgroundColor: "rgb(249, 115, 22)",
+        pointBorderColor: "#fff",
       },
       {
         label: "Feels Like (°C)",
         data: data.feelsLike,
-        borderColor: "rgb(255, 159, 64)",
-        backgroundColor: "rgba(255, 159, 64, 0.5)",
+        borderColor: "rgb(239, 68, 68)",
+        backgroundColor: "rgba(239, 68, 68, 0.1)",
+        fill: true,
         tension: 0.4,
+        pointBackgroundColor: "rgb(239, 68, 68)",
+        pointBorderColor: "#fff",
       },
     ],
   };
@@ -118,10 +158,12 @@ const WeatherTrends = ({ data }) => {
       {
         label: "Humidity (%)",
         data: data.humidity,
-        borderColor: "rgb(54, 162, 235)",
-        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        borderColor: "rgb(59, 130, 246)",
+        backgroundColor: "rgba(59, 130, 246, 0.2)",
         fill: true,
         tension: 0.4,
+        pointBackgroundColor: "rgb(59, 130, 246)",
+        pointBorderColor: "#fff",
       },
     ],
   };
@@ -132,17 +174,23 @@ const WeatherTrends = ({ data }) => {
       {
         label: "Wind Speed (km/h)",
         data: data.windSpeed,
-        borderColor: "rgb(75, 192, 192)",
-        backgroundColor: "rgba(75, 192, 192, 0.5)",
+        borderColor: "rgb(139, 92, 246)",
+        backgroundColor: "rgba(139, 92, 246, 0.1)",
+        fill: true,
         tension: 0.4,
+        pointBackgroundColor: "rgb(139, 92, 246)",
+        pointBorderColor: "#fff",
       },
       {
         label: "Wind Gusts (km/h)",
         data: data.windGust,
-        borderColor: "rgb(153, 102, 255)",
-        backgroundColor: "rgba(153, 102, 255, 0.5)",
+        borderColor: "rgb(168, 85, 247)",
+        backgroundColor: "rgba(168, 85, 247, 0.1)",
+        fill: false,
         tension: 0.4,
         borderDash: [5, 5],
+        pointBackgroundColor: "rgb(168, 85, 247)",
+        pointBorderColor: "#fff",
       },
     ],
   };
@@ -164,50 +212,88 @@ const WeatherTrends = ({ data }) => {
     }
   };
 
+  const tabData = [
+    {
+      value: "temperature",
+      icon: Thermometer,
+      label: "Temperature",
+      color: "text-orange-500",
+      gradient: "from-orange-400 to-red-500",
+    },
+    {
+      value: "humidity",
+      icon: Drop,
+      label: "Humidity",
+      color: "text-blue-500",
+      gradient: "from-blue-400 to-cyan-500",
+    },
+    {
+      value: "wind",
+      icon: Wind,
+      label: "Wind",
+      color: "text-purple-500",
+      gradient: "from-purple-400 to-indigo-500",
+    },
+  ];
+
   return (
-    <Card className="shadow-lg dark:bg-gray-800">
+    <Card className="chart-container border-0 shadow-lg overflow-hidden">
       <CardHeader
         floated={false}
         shadow={false}
-        className="rounded-none pt-4 pb-0"
+        className="rounded-none pt-4 pb-0 bg-transparent"
       >
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 px-4">
-          <div>
-            <Typography
-              variant="h5"
-              className="text-gray-800 dark:text-white font-bold"
-            >
-              Weather Trends
-            </Typography>
-            <Typography
-              color="gray"
-              className="mt-1 text-gray-600 dark:text-gray-400"
-            >
-              {data.period}
-            </Typography>
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 px-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg">
+              <Activity size={20} weight="fill" />
+            </div>
+            <div>
+              <Typography variant="h5" className="text-gradient font-bold">
+                Weather Trends
+              </Typography>
+              <Typography
+                variant="small"
+                className="text-readable-light font-medium"
+              >
+                {data.period}
+              </Typography>
+            </div>
           </div>
-          <div className="w-full md:w-auto">
+
+          <div className="w-full lg:w-auto">
             <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
-              <TabsHeader>
-                <Tab value="temperature" className="flex items-center gap-2">
-                  <Thermometer size={18} />
-                  Temperature
-                </Tab>
-                <Tab value="humidity" className="flex items-center gap-2">
-                  <Drop size={18} />
-                  Humidity
-                </Tab>
-                <Tab value="wind" className="flex items-center gap-2">
-                  <Wind size={18} />
-                  Wind
-                </Tab>
+              <TabsHeader className="bg-white/50 p-1">
+                {tabData.map(
+                  ({ value, icon: Icon, label, color, gradient }) => (
+                    <Tab
+                      key={value}
+                      value={value}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 font-semibold ${
+                        activeTab === value
+                          ? `bg-gradient-to-r ${gradient} text-white shadow-md`
+                          : "text-gray-600 hover:text-gray-800"
+                      }`}
+                    >
+                      <Icon
+                        size={16}
+                        weight="fill"
+                        className={activeTab === value ? "text-white" : color}
+                      />
+                      <span className="hidden sm:inline">{label}</span>
+                    </Tab>
+                  )
+                )}
               </TabsHeader>
             </Tabs>
           </div>
         </div>
       </CardHeader>
+
       <CardBody className="px-4 pb-4">
-        <div className="h-80">{renderChart()}</div>
+        <div className="h-64 relative rounded-lg overflow-hidden">
+          {renderChart()}
+        </div>
       </CardBody>
     </Card>
   );
