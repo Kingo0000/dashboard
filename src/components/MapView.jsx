@@ -135,20 +135,20 @@ const MapView = ({ location, data }) => {
               variant="h5"
               className="text-gray-800 dark:text-white font-bold"
             >
-              Interactive Map View
+               Map View
             </Typography>
           </div>
-          <Typography
+          {/* <Typography
             color="gray"
             className="mt-1 text-gray-600 dark:text-gray-400"
           >
             Weather patterns and overlays
-          </Typography>
+          </Typography> */}
         </div>
       </CardHeader>
-      <CardBody className="px-4 pb-4">
-        <div className="flex flex-wrap gap-4 mb-4">
-          <Checkbox
+      <CardBody className="">
+        <div className="flex flex-wrap ">
+          {/* <Checkbox
             label="Temperature"
             onChange={() => toggleLayer("temperature")}
             color="red"
@@ -167,9 +167,9 @@ const MapView = ({ location, data }) => {
             label="Wind"
             onChange={() => toggleLayer("wind")}
             color="teal"
-          />
+          /> */}
         </div>
-        <div ref={mapRef} className="h-[300px] w-full rounded-lg z-0"></div>
+        <div ref={mapRef} className="h-[450px] w-full rounded-lg z-0"></div>
       </CardBody>
     </Card>
   );
