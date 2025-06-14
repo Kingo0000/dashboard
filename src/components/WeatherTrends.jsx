@@ -19,7 +19,7 @@ import {
   Legend,
   Filler,
 } from "chart.js";
-import { Thermometer, Drop, Wind, Activity } from "@phosphor-icons/react";
+import { Thermometer, Drop, Wind, Pulse } from "@phosphor-icons/react";
 
 // Register ChartJS components
 ChartJS.register(
@@ -243,7 +243,7 @@ const WeatherTrends = ({ data }) => {
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 px-4">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg">
-              <Activity size={20} weight="fill" />
+              <Pulse size={20} weight="fill" />
             </div>
             <div>
               <Typography variant="h5" className="text-gradient font-bold">
