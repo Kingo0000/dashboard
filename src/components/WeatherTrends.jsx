@@ -6,9 +6,6 @@ import {
   CardBody,
   CardHeader,
   Typography,
-  Tabs,
-  TabsHeader,
-  Tab,
 } from "@material-tailwind/react";
 import { Chart } from "react-chartjs-2";
 import {
@@ -37,7 +34,7 @@ ChartJS.register(
 );
 
 const WeatherTrends = ({ data }) => {
-  const [activeTab, setActiveTab] = useState("temperature");
+  const [activeTab, setActiveTab] = useState("wind");
 
   if (!data) return null;
 
@@ -262,30 +259,26 @@ const WeatherTrends = ({ data }) => {
           </div>
 
           <div className="w-full lg:w-auto">
-            <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
-              <TabsHeader className="bg-white/50 p-1">
-                {tabData.map(
-                  ({ value, icon: Icon, label, color, gradient }) => (
-                    <Tab
-                      key={value}
-                      value={value}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 font-semibold ${
-                        activeTab === value
-                          ? `bg-gradient-to-r ${gradient} text-white shadow-md`
-                          : "text-gray-600 hover:text-gray-800"
-                      }`}
-                    >
-                      <Icon
-                        size={16}
-                        weight="fill"
-                        className={activeTab === value ? "text-white" : color}
-                      />
-                      <span className="hidden sm:inline">{label}</span>
-                    </Tab>
-                  )
-                )}
-              </TabsHeader>
-            </Tabs>
+            <div className="bg-gray-100/80 p-1 rounded-xl flex gap-1">
+              {tabData.map(({ value, icon: Icon, label, color, gradient }) => (
+                <button
+                  key={value}
+                  onClick={() => setActiveTab(value)}
+                  className={`relative flex items-center justify-center gap-2 flex-1 sm:flex-initial px-4 py-2 rounded-lg transition-all duration-300 font-semibold ${
+                    activeTab === value
+                      ? `bg-gradient-to-r ${gradient} text-white shadow-lg transform scale-105`
+                      : `bg-transparent text-gray-600 hover:text-gray-800 hover:bg-white/50`
+                  }`}
+                >
+                  <Icon
+                    size={16}
+                    weight="fill"
+                    className={activeTab === value ? "text-white" : color}
+                  />
+                  <span className="hidden sm:inline">{label}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </CardHeader>
